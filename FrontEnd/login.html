@@ -28,16 +28,17 @@
         </header>
         <main class="login">
             <h2>Log In</h2>
-            <form action="POST">
+            <form action="get">
                 <fieldset>
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" />
+                    <input type="email" name="email" id="email" value="sophie.bluel@test.tld" />
                 </fieldset>
                 <fieldset>
                     <label for="password">Mot de passe</label>
-                    <input type="password" name="password" id="password" />
+                    <input type="password" name="password" id="password" value="S0phie" />
 
                 </fieldset>
+                <div class="error">Mot de passe ou E-mail incorrect</div>
                 <button type="submit">Se connecter</button>
             </form>
             <button type="button">Mot de passe oublié</button>

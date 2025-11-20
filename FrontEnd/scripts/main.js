@@ -1,4 +1,8 @@
- import { displayWorks, filters } from "/scripts/script.js";
+ import { displayWorks, filters, login } from "/scripts/script.js";
 
-displayWorks();
-filters();
+
+if(window.location.href === "http://127.0.0.1:5500/index.html"){
+    displayWorks();
+    filters();
+}
+login();
