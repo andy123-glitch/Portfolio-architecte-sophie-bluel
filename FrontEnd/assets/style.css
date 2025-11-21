@@ -386,7 +386,7 @@ a {
 
 /****************Modal*********************/
 
-.modal {
+.modal-backgroud {
     position: absolute;
     background-color: #000000a4;
     width: 100%;
@@ -396,7 +396,7 @@ a {
     left: 0;
 }
 
-.modal-delete {
+.modal {
     width: 630px;
     max-height: 688px;
     position: relative;
@@ -410,7 +410,7 @@ a {
     align-items: center;
 }
 
-.modal-delete h3 {
+.modal h3 {
     font-weight: normal;
     font-size: 2em;
     padding: 36px;
@@ -467,4 +467,59 @@ a {
     margin: auto;
     margin-top: 38px;
     margin-bottom: 45px;
+}
+
+.file {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8f1f6;
+    gap: 7px;
+    padding: 15px 0px;
+    height: 169px;
+    width: 420px;
+}
+
+.file img {
+    width: 76px;
+    height: 76px;
+}
+
+.file div {
+    border-radius: 50px;
+    background-color: #cbd6dc;
+    font-size: 1em;
+    font-weight: normal;
+    font-family: "Work Sans";
+    padding: 10px 33px;
+}
+.file p {
+    font-size: 0.9em;
+    font-weight: 400;
+    font-family: "Work Sans";
+}
+
+.file input {
+    display: none;
+}
+
+#category {
+    height: 51px;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    box-shadow: 0px 4px 14px #00000017;
+    background-color: white;
+}
+
+#btn-save-works {
+    font-family: "Syne";
+    font-weight: 700;
+    color: white;
+    background-color: #1d6154;
+    padding: 2em auto;
+    width: 180px;
+    text-align: center;
+    border-radius: 60px;
 }

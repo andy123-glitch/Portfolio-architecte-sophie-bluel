@@ -78,8 +78,8 @@
             </section>
         </main>
 
-        <div class="modal">
-            <section class="modal-delete">
+        <div class="modal-backgroud">
+            <!-- <section class="modal-delete">
                 <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
                 <h3>Galerie photo</h3>
                 <div class="imgGalery">
@@ -127,7 +127,37 @@
                     </div>
                 </div>
                 <button type="button" id="btn-add-works">Ajouter une photo</button>
-            </section>
+            </section> -->
+
+            <section class="modal">
+                <div class="modal-add">
+                    <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
+                    <h3>Ajouter des Photos</h3>
+                    <form action="#" method="get">
+                        <label for="file" class="file">
+                            <img src="assets/icons/preimg.svg" alt="">
+                            <div>+ Ajouetr une photo</div> 
+                            <p>jpg,png : 4 mo max</p>
+                            <input type="file" name="file" id="file" >
+                        </label>
+                        <fieldset >
+                            <label for="title">Titre</label>
+                            <input type="text" name="title" id="title" />
+                        </fieldset>
+                        <fieldset>
+                            <label for="category">Categories</label>
+                            <select name="category" id="category">
+                                <option value="test">test</option>
+                                <option value="test">test</option>
+                                <option value="test">test</option>
+                                <option value="test">test</option>
+                                <option value="test">test</option>
+                            </select>
+                        </fieldset>
+                        <button type="submit" id="btn-save-works">Sauvegarder</button>
+                    </form>
+                </section>
+                </div>
         </div>
 
         <footer>
