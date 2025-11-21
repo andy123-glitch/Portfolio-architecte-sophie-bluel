@@ -376,3 +376,105 @@ a{
     text-decoration: none;
     color: unset;
 }
+.edition{
+    font-size: 1rem ;
+    color: black;
+    font-weight: normal;
+    position: relative;
+    left: 30px;
+    display: none;
+}
+
+/****************Modal*********************/
+
+
+.modal{
+    position: absolute;
+    background-color: #000000a4;
+    width: 100%;
+    height: 480%;
+    top: 0;
+    left: 0;
+}
+
+.modal-delete{
+    width: 630px;
+    max-height: 688px;
+    position: relative;
+    top: 660px;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.modal-delete h3{
+    font-weight: normal;
+    font-size: 2em;
+    padding: 36px;
+
+}
+
+.modal-close{
+    align-self: flex-end;
+    margin-right: 35px;
+    margin-top: 32px;
+}
+
+
+.imgGalery{
+    margin: 0px 100px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    column-gap: 9px;
+    row-gap: 29px ;
+    border-bottom: #B3B3B3 1px solid;
+    padding-bottom:  50px;
+
+
+}
+.btn-suppr{
+    position: relative;
+    top: -100px;
+    left: 55px;
+    border: black;
+    background-color: black;
+    height: 17px;
+    width: 17px;
+    border-radius: 2px;
+    padding: 0;
+}
+
+.imgGalery > div >button> img{
+    width: 10px;
+    height: 10px;
+
+}
+
+.imgGalery img{
+    object-fit: contain;
+    height: 102px;
+    width: 76px;
+}
+
+.modal-delete > button{
+    font-family: "Syne";
+    font-weight: 700;
+    font-size: 1em;
+    color: #fffef8;
+    height: 36px;
+    width: 237px;
+    border: #1d6154 1px solid;
+    border-radius: 60px;
+    background-color: #1d6154;
+    margin: auto;
+    margin-top: 38px;
+    margin-bottom: 45px;
+}
+
+
+

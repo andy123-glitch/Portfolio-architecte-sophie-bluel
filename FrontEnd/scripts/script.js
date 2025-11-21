@@ -105,15 +105,24 @@ export async function filters() {
 
 export function editionMode(){
 
+    //affiche le bandeau
     const bandeau = document.querySelector(".editonMode");
     bandeau.style.display = "flex";
 
+    //Change le login en logout et ajoute la fonctionnalité de deconnection
     const log = document.querySelector(".log");
     log.innerHTML = '<a href="">log out</a>';
     log.addEventListener("click", (e) => {
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
     });
+
+    //Affiche le texte modifier
+    const txtModifier = document.querySelector("span.edition")
+    txtModifier.style.setProperty("display","inline");
+    txtModifier.addEventListener("click", (e) => {
+        alert(txtModifier)
+    })
 
     
 }
