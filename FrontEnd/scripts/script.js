@@ -3,7 +3,6 @@ import { GETworks, GETcategory, POSTlogin } from "/scripts/config.js";
 export async function displayWorks() {
     //Get works by API
     const works = await fetch(GETworks).then((works) => works.json());
-    let figure = "";
     dispaly(works);
 }
 
@@ -26,7 +25,7 @@ export function login() {
         //desactive le recharhement de la page
         event.preventDefault();
 
-        //Recupere les valeurs des champs 
+        //Recupere les valeurs des champs
         const email = document.getElementById("email");
         const password = document.getElementById("password");
 
@@ -49,12 +48,11 @@ export function login() {
             const error = document.querySelector(".error");
             console.log(connection.body);
             error.style.display = "block";
-
-        }else{
-            //Récupere les donnée au format json 
+        } else {
+            //Récupere les donnée au format json
             let result = await connection.json();
             //Si on ne trouve pas de données de connexion dans le local storage, on les initialise
-            if(userConnected() === null){
+            if (userConnected() === null) {
                 window.localStorage.setItem("userId", result.userId);
                 window.localStorage.setItem("token", result.token);
             }
@@ -102,9 +100,7 @@ export async function filters() {
     });
 }
 
-
-export function editionMode(){
-
+export function editionMode() {
     //affiche le bandeau
     const bandeau = document.querySelector(".editonMode");
     bandeau.style.display = "flex";
@@ -118,12 +114,54 @@ export function editionMode(){
     });
 
     //Affiche le texte modifier
-    const txtModifier = document.querySelector("span.edition")
-    txtModifier.style.setProperty("display","inline");
-    txtModifier.addEventListener("click", (e) => {
-        alert(txtModifier)
-    })
-
-    
+    const txtModifier = document.querySelector("span.edition");
+    txtModifier.style.setProperty("display", "inline");
+    // txtModifier.addEventListener("click", (e) => {
+    //     alert(txtModifier)
+    // })
 }
 
+export function dispalyModal() {
+    const btn = document.querySelector("span.edition");
+    const modalBack = document.querySelector(".modal-backgroud");
+    const modalClose = document.getElementById("modal-close");
+    const Back = document.getElementById("modal-back");
+
+    modalClose.addEventListener("click", () => {
+        modal("close")
+
+    });
+    modalBack.addEventListener("click", () => {
+        modal("close")
+    });
+    btn.addEventListener("click", () => {
+        modal("open");
+    });
+    Back.addEventListener("click", () => {
+        modal("back");
+    });
+
+}
+
+function modal(action) {
+    const backgroud = document.querySelector(".modal-backgroud");
+    const  delete = document.querySelector(".modal-delete");
+    const modaladd = document.querySelector(".modal-add");
+
+    switch (action) {
+        case "open":
+             delete.style.setProperty("display", "flex");
+            modalBack.style.setProperty("display", "block");
+            break;
+        case "add":
+            modaladd.style.setProperty("display", "flex");
+             delete.style.setProperty("display", "none");
+            break;
+        case "close":
+        default:
+             delete.style.setProperty("display", "none");
+            modalBack.style.setProperty("display", "none");
+            modaladd.style.setProperty("display", "none");
+            break;
+    }
+}

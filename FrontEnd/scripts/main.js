@@ -1,4 +1,4 @@
-import { displayWorks, filters, login, editionMode, userConnected } from "/scripts/script.js";
+import { dispalyModal,displayWorks, filters, login, editionMode, userConnected } from "/scripts/script.js";
 
 displayWorks();
 if (userConnected() === null) {
@@ -10,5 +10,5 @@ if (userConnected() === null) {
 } else {
     editionMode();
 }
-
+dispalyModal();
 

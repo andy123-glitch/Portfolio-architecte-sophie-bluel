@@ -14,9 +14,7 @@
         <script type="module" src="/scripts/main.js"></script>
     </head>
     <body>
-        <div class="editonMode">
-            <img src="assets/icons/modificateur.png" alt="" /> Mode edition
-        </div>
+        <div class="editonMode"><img src="assets/icons/modificateur.png" alt="" /> Mode edition</div>
         <header>
             <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
             <nav>
@@ -36,18 +34,17 @@
                 <article>
                     <h2>Designer d'espace</h2>
                     <p>
-                        Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la
-                        conception à la livraison finale du chantier.
+                        Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la
+                        livraison finale du chantier.
                     </p>
                     <p>
-                        Chaque projet sera étudié en commun, de façon à mettre en valeur les
-                        volumes, les matières et les couleurs dans le respect de l’esprit des lieux
-                        et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le
-                        souci du détail, le respect du planning et du budget.
+                        Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et
+                        les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+                        chantier sera assuré dans le souci du détail, le respect du planning et du budget.
                     </p>
                     <p>
-                        En cas de besoin, une équipe pluridisciplinaire peut-être constituée :
-                        architecte DPLG, décorateur(trice)
+                        En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
+                        décorateur(trice)
                     </p>
                 </article>
             </section>
@@ -79,85 +76,88 @@
         </main>
 
         <div class="modal-backgroud">
-            <!-- <section class="modal-delete">
+             <section class="modal modal-delete">
                 <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
                 <h3>Galerie photo</h3>
-                <div class="imgGalery">
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
+                <div class="modal-galery">
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
                         <button type="button" class="btn-suppr" id="0">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
-                        <button type="button" class="btn-suppr" >
-                            <img src="assets/icons/Poubele.svg" alt="" />
-                        </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
                         <button type="button" class="btn-suppr">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
-                        <button type="button" class="btn-suppr" >
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
+                        <button type="button" class="btn-suppr">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
-                        <button type="button" class="btn-suppr" >
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
+                        <button type="button" class="btn-suppr">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
-                        <button type="button" class="btn-suppr" >
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
+                        <button type="button" class="btn-suppr">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
-                    <div>
-                        <img src="assets/images/abajour-tahina.png" alt="" />
-                        <button type="button" class="btn-suppr"  >
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
+                        <button type="button" class="btn-suppr">
                             <img src="assets/icons/Poubele.svg" alt="" />
                         </button>
-                    </div>
+                    </article>
+                    <article>
+                        <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
+                        <button type="button" class="btn-suppr">
+                            <img src="assets/icons/Poubele.svg" alt="" />
+                        </button>
+                    </article>
                 </div>
                 <button type="button" id="btn-add-works">Ajouter une photo</button>
-            </section> -->
+            </section> 
 
-            <section class="modal">
-                <div class="modal-add">
+            <section class="modal modal-add">
+                <div class="modal-head">
+                    <img src="assets/icons/gauche.svg" alt="" class="modal-back" id="modal-back" />
                     <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
-                    <h3>Ajouter des Photos</h3>
-                    <form action="#" method="get">
-                        <label for="file" class="file">
-                            <img src="assets/icons/preimg.svg" alt="">
-                            <div>+ Ajouetr une photo</div> 
-                            <p>jpg,png : 4 mo max</p>
-                            <input type="file" name="file" id="file" >
-                        </label>
-                        <fieldset >
-                            <label for="title">Titre</label>
-                            <input type="text" name="title" id="title" />
-                        </fieldset>
-                        <fieldset>
-                            <label for="category">Categories</label>
-                            <select name="category" id="category">
-                                <option value="test">test</option>
-                                <option value="test">test</option>
-                                <option value="test">test</option>
-                                <option value="test">test</option>
-                                <option value="test">test</option>
-                            </select>
-                        </fieldset>
-                        <button type="submit" id="btn-save-works">Sauvegarder</button>
-                    </form>
-                </section>
                 </div>
+                <h3>Ajouter des Photos</h3>
+                <form action="#" method="get">
+                    <label for="file" class="file">
+                        <img src="assets/icons/preimg.svg" alt="" />
+                        <div>+ Ajouter une photo</div>
+                        <p>jpg, png : 4 mo max</p>
+                        <input type="file" name="file" id="file" />
+                    </label>
+                    <fieldset>
+                        <label for="title">Titre</label>
+                        <input type="text" name="title" id="title" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="category">Catégorie</label>
+                        <select name="category" id="category">
+                            <option value="test">test</option>
+                            <option value="test">test</option>
+                            <option value="test">test</option>
+                            <option value="test">test</option>
+                            <option value="test">test</option>
+                        </select>
+                    </fieldset>
+                    <div class="btn-save-works">
+                        <button type="submit" id="btn-save-works" disabled>Valider</button>
+                    </div>
+                </form>
+            </section>
         </div>
 
         <footer>
