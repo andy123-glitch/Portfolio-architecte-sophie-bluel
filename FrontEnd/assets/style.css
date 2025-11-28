@@ -419,7 +419,7 @@ a {
     text-align: center;
 }
 
-#modal-close {
+.modal-close {
     align-self: flex-end;
     margin-right: 30px;
     margin-top: 26px;
@@ -524,24 +524,24 @@ a {
     align-self: stretch;
 }
 
-#modal-back{
+.modal-back{
     margin-left: 30px;
     margin-top: 26px;
 }
 
-.btn-save-works {
+.save-work {
     text-align: center;
     border-top: 1px solid #b3b3b3;
     padding-top: 32px;
     padding-bottom: 52px;
 }
 
-.btn-save-works button{
+.save-work button{
     font-family: "Syne";
 
 }
 
-#btn-save-works:disabled{
+#btn-save-work:disabled{
     background-color: #A7A7A7;
     color: white;
     border-color: #A7A7A7 ;

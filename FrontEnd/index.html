@@ -14,7 +14,7 @@
         <script type="module" src="/scripts/main.js"></script>
     </head>
     <body>
-        <div class="editonMode"><img src="assets/icons/modificateur.png" alt="" /> Mode edition</div>
+        <div class="editonMode"><img src="assets/icons/modificateur.png" alt="Crayon" /> Mode edition</div>
         <header>
             <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
             <nav>
@@ -29,7 +29,7 @@
         <main>
             <section id="introduction">
                 <figure>
-                    <img src="./assets/images/sophie-bluel.png" alt="" />
+                    <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel" />
                 </figure>
                 <article>
                     <h2>Designer d'espace</h2>
@@ -52,7 +52,7 @@
                 <h2>
                     Mes Projets
                     <span class="edition">
-                        <img src="assets/icons/Group.png" alt="" />
+                        <img src="assets/icons/Group.png" alt="Crayon" />
                         modifier
                     </span>
                 </h2>
@@ -76,79 +76,37 @@
         </main>
 
         <section class="modal modal-delete">
-            <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
+            <img src="assets/icons/croix.svg" alt="Croix" class="modal-close"/>
             <h3>Galerie photo</h3>
             <div class="modal-galery">
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr" id="0">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
-                <article>
-                    <img src="assets/images/abajour-tahina.png" alt="" class="modal-galery-img" />
-                    <button type="button" class="btn-suppr">
-                        <img src="assets/icons/Poubele.svg" alt="" />
-                    </button>
-                </article>
             </div>
             <button type="button" id="modal-next">Ajouter une photo</button>
         </section>
 
         <section class="modal modal-add">
             <div class="modal-head">
-                <img src="assets/icons/gauche.svg" alt="" class="modal-back" id="modal-back" />
-                <img src="assets/icons/croix.svg" alt="" class="modal-close" id="modal-close" />
+                <img src="assets/icons/gauche.svg" alt="Precédent" class="modal-back" />
+                <img src="assets/icons/croix.svg" alt="Croix" class="modal-close" />
             </div>
             <h3>Ajouter des Photos</h3>
             <form action="#" method="get">
-                <label for="file" class="file">
+                <label for="image" class="file">
                     <img src="assets/icons/preimg.svg" alt="" />
                     <div>+ Ajouter une photo</div>
                     <p>jpg, png : 4 mo max</p>
-                    <input type="file" name="file" id="file" accept=".jpg,.png" />
+                    <input type="file" name="image" id="image" accept=".jpg,.png" />
                 </label>
                 <fieldset>
                     <label for="title">Titre</label>
                     <input type="text" name="title" id="title" />
                 </fieldset>
                 <fieldset>
-                    <label for="category">Catégorie</label>
+                    <label for="category">Catégorie(s)</label>
                     <select name="category" id="category">
                     </select>
                 </fieldset>
-                <div class="btn-save-works">
-                    <button type="submit" id="btn-save-works" disabled>Valider</button>
+                <div class="save-work">
+                    <button type="submit" id="btn-save-work" disabled>Valider</button>
                 </div>
             </form>
         </section>

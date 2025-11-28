@@ -1,33 +1,35 @@
-import { URLworks, GETcategory, POSTlogin } from "/scripts/config.js";
-
-export async function displayWorks() {
-    //Get works by API
-    const works = await getworks();
-    dispaly(works);
-}
+import { URLworks, GETcategorys } from "/scripts/config.js";
 
 async function getworks() {
-    return await fetch(URLworks).then((works) => works.json());
+    return await fetch(URLworks)
+        .then((works) => works.json())
+        .catch((error) => console.error(error));
 }
 
-async function getcategory() {
-    return await fetch(GETcategory).then((category) => category.json());
+async function getcategorys() {
+    return await fetch(GETcategorys)
+        .then((category) => category.json())
+        .catch((error) => console.error(error));
 }
 
-async function postWorks(image, title, categoryId) {
-    const body = {
-        image: image,
-        title: title,
-        category: categoryId,
-    };
-    return await fetch(URLworks, {
-        method: "POST",
-        headers: {
-            "Content-Type": "mutipart/form-data",
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
-        },
-        body: JSON.stringify(body),
-    }).then((result) => result.json());
+async function postWorks(formData) {
+    try {
+        const response = await fetch(URLworks, {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + window.localStorage.getItem("token"),
+            },
+            body: formData,
+        });
+
+        if (response.ok) {
+            console.log("Form submitted successfully!");
+        } else {
+            console.error("Form submission failed:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+    }
 }
 
 async function delWorks(id) {
@@ -36,111 +38,75 @@ async function delWorks(id) {
         headers: {
             Authorization: "Bearer " + window.localStorage.getItem("token"),
         },
-    }).then((r) => console.log(r.ok));
+    })
+        .then((response) => response.json())
+        .catch((error) => console.error(error));
 }
 
-function dispaly(array) {
+export async function displayWorks(id=0) {
+    let works = await getworks();
+    //Récupere les travaux en base données
+    if (id != 0) works = works.filter((element) => element.categoryId === id);
+
     let figure = "";
-    // Loop in works for add html node in figure to add inner div.gallery
-    array.forEach((element) => {
+    //Boucle sur les travaux pour les ajouter a la page d'acceuil
+    works.forEach((work) => {
         figure += `<figure>
-        <img src="${element.imageUrl}" alt="${element.title}" categorie-name="${element.category.name}">
-        <figcaption>${element.title}</figcaption>
+        <img src="${work.imageUrl}" alt="${work.title}" categorie-name="${work.category.name}">
+        <figcaption>${work.title}</figcaption>
         </figure>`;
     });
     document.querySelector(".gallery").innerHTML = figure;
 }
 
-export function login() {
-    //recupere le formulaire
-    if (window.location.href !== "http://127.0.0.1:5500/login.html") return 0;
-    const form = document.querySelector(".login form");
-    form.addEventListener("submit", async (event) => {
-        //desactive le recharhement de la page
-        event.preventDefault();
-
-        //Recupere les valeurs des champs
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
-
-        //Construis le body et envoie la requete
-        const body = {
-            email: email.value,
-            password: password.value,
-        };
-        let connection = await fetch(POSTlogin, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        });
-
-        //Si le code de status n'est pas 200, l'email ou le mot de passe est incorrect
-        if (connection.status !== 200) {
-            //Fais apparaitre un message d'erreur
-            const error = document.querySelector(".error");
-            console.log(connection.body);
-            error.style.display = "block";
-        } else {
-            //Récupere les donnée au format json
-            let result = await connection.json();
-            //Si on ne trouve pas de données de connexion dans le local storage, on les initialise
-            if (userConnected() === null) {
-                window.localStorage.setItem("userId", result.userId);
-                window.localStorage.setItem("token", result.token);
-            }
-            //redirige sur la page principale
-            window.location.href = "http://127.0.0.1:5500/index.html";
-        }
-    });
-}
-
-//fonction pour savoir si l'utilidsateur est deja connécté
+//fonction pour savoir si l'utilisateur est connécté
 export function userConnected() {
-    return window.localStorage.getItem("userId") || window.localStorage.getItem("token");
+    return window.localStorage.getItem("userId") || window.localStorage.getItem("token") ? true : false;
 }
 
 export async function filters() {
     const divFilters = document.querySelector(".filters");
-    const category = await fetch(GETcategory).then((category) => category.json());
+
+    //Récupere les catégories
+    const categorys = await getcategorys();
+    //Ajoute le filtre "Tous"
     divFilters.innerHTML += `<button id="0" class="active">Tous</button>`;
-    category.forEach((c) => {
-        let btn = `<button id="${c.id}">${c.name}</button>`;
+    //Pour chaque categories, ajoutes un bouton correspondant
+    categorys.forEach((category) => {
+        let btn = `<button id="${category.id}">${category.name}</button>`;
         divFilters.innerHTML += btn;
     });
 
-    const filterBtn = document.querySelectorAll(".filters");
+    //Récupere les boutons
+    const btnFilters = document.querySelectorAll(".filters");
 
-    filterBtn.forEach((btn) => {
+    //Ajoute un evenement aux click sur chaque bouton
+    btnFilters.forEach((btn) => {
         btn.addEventListener("click", async (e) => {
-            const filterBtns = document.querySelectorAll(".filters button");
-            filterBtns.forEach((btn) => {
+            //Récupere les boutons
+            const btns = document.querySelectorAll(".filters button");
+            //Pour chaque bouton, j'enleve la class active et je l'ajoute au bouton selectionné
+            btns.forEach((btn) => {
                 btn.classList.remove("active");
             });
             e.target.classList.add("active");
 
-            const id = e.target.id;
-            console.log(id);
-
-            const works = await fetch(URLworks).then((works) => works.json());
-            if (id != 0) {
-                const filteredBtn = works.filter((element) => element.categoryId == id);
-                dispaly(filteredBtn);
-            } else dispaly(works);
+            //Affiche les travaux avec l'id de la categorie pour afficher ce qui corresponde
+            displayWorks(e.target.id);
         });
     });
 }
 
+
 export function editionMode() {
-    //affiche le bandeau
+    //Affiche le bandeau
     const bandeau = document.querySelector(".editonMode");
     bandeau.style.setProperty("display", "flex");
 
     //Change le login en logout et ajoute la fonctionnalité de deconnection
     const log = document.querySelector(".log");
-    log.innerHTML = '<a href="">log out</a>';
-    log.addEventListener("click", (e) => {
+    log.innerHTML = '<a href="#">log out</a>';
+    log.addEventListener("click", () => {
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
     });
@@ -148,38 +114,39 @@ export function editionMode() {
     //Affiche le texte modifier
     const txtModifier = document.querySelector("span.edition");
     txtModifier.style.setProperty("display", "inline");
-    // txtModifier.addEventListener("click", (e) => {
-    //     alert(txtModifier)
-    // })
 }
 
-export function initModal() {
-    if (window.location.href !== "http://127.0.0.1:5500/index.html") return 0;
 
+
+export function initModal() {
     //Initiaalisation des variables pour la modal
     const open = document.querySelector("span.edition");
     const background = document.querySelector(".modal-background");
-    const close = document.getElementById("modal-close");
+    const closes = document.querySelectorAll(".modal-close");
     const next = document.getElementById("modal-next");
-    const back = document.getElementById("modal-back");
+    const back = document.querySelector(".modal-back");
 
     //Ajoute les evenements sur les boutons et le background
     next.addEventListener("click", () => {
         modal("next");
-        addWorks();
+        formAddWorks();
     });
-    close.addEventListener("click", () => {
-        modal("close");
-    });
+    for (let close of closes) {
+        close.addEventListener("click", () => {
+            modal("close");
+        });
+    }
     background.addEventListener("click", () => {
         modal("close");
     });
     open.addEventListener("click", () => {
         modal("open");
+        //Affiche les photo a supprimer
         imgGalery();
     });
     back.addEventListener("click", () => {
         modal("return");
+        //Affiche les photo a supprimer
         imgGalery();
     });
 }
@@ -214,18 +181,10 @@ function modal(action) {
 }
 
 async function imgGalery() {
+    //Récupere les travaux pour les afficher
     const works = await getworks();
-    displayIMGgalery(works, ".modal-galery");
-    const btnSuppr = document.querySelectorAll(".btn-suppr");
-    for (let btn of btnSuppr) {
-        btn.addEventListener("click", async () => {
-            await delWorks(btn.id);
-            imgGalery();
-        });
-    }
-}
 
-function displayIMGgalery(works, selector) {
+    //affiche les images avec un bouton pour supprimer
     let figure = "";
     works.forEach((element) => {
         figure += `<article>
@@ -235,14 +194,25 @@ function displayIMGgalery(works, selector) {
                     </button>
                 </article>`;
     });
-    document.querySelector(selector).innerHTML = figure;
+    document.querySelector(".modal-galery").innerHTML = figure;
+
+
+    //Ajoute un evenement au click sur les boutons et rappel img galery pour mettre a jour les images
+    const btnSuppr = document.querySelectorAll(".btn-suppr");
+    for (let btn of btnSuppr) {
+        btn.addEventListener("click", async () => {
+            await delWorks(btn.id);
+            imgGalery();
+        });
+    }
 }
 
-async function addWorks() {
-    const title = document.getElementById("title");
 
+async function formAddWorks() {
+
+    const title = document.getElementById("title");
     const select = document.getElementById("category");
-    const categorys = await getcategory();
+    const categorys = await getcategorys();
 
     const form = document.querySelector(".modal-add form");
 
@@ -253,34 +223,19 @@ async function addWorks() {
     categorys.forEach((c) => {
         let option = document.createElement("option");
         option.innerText = c.name;
-        option.value = c.name;
-        option.id = c.id;
+        option.value = c.id;
         select.appendChild(option);
-        console.log(option);
     });
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("title", title.value);
-        formData.append("categoryId", select.selectedOptions[0].id);
-        formData.append("image", preimage.files[0]);
-        console.log(formData);
-        // const reader = new FileReader();
-        // let dataimg = "";
-        // reader.onload = () => {
-        //     dataimg = reader.result;
-
-        //     console.log(dataimg);
-
-        postWorks(dataimg, title.value, select.selectedOptions[0].id);
-        // }
-        // reader.readAsBinaryString(preimage.files[0]);
+        const formData = new FormData(form);
+        postWorks(formData);
     });
 
     const image = document.querySelector(".file img");
-    const preimage = document.getElementById("file");
-    preimage.addEventListener("change", (e) => {
+    const preimage = document.getElementById("image");
+    preimage.addEventListener("change", () => {
         if (preimage.files[0] !== undefined) {
             image.src = URL.createObjectURL(preimage.files[0]);
             image.onload = () => {
@@ -297,7 +252,7 @@ async function addWorks() {
 }
 
 function validForm(title, select, preimage) {
-    const btn = document.getElementById("btn-save-works");
+    const btn = document.getElementById("btn-save-work");
     if (title.value !== "" && select.options.length != 0 && preimage.files.length === 1) {
         btn.disabled = false;
     } else btn.disabled = true;
