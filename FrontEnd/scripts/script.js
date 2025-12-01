@@ -43,11 +43,14 @@ async function delWorks(id) {
         .catch((error) => console.error(error));
 }
 
-export async function displayWorks(id=0) {
-    let works = await getworks();
-    //Récupere les travaux en base données
-    if (id != 0) works = works.filter((element) => element.categoryId === id);
+const WORKS = await getworks();
+const CATEGORYS = await getcategorys();
 
+export async function displayWorks(id = 0) {
+    let works = WORKS;
+    //Récupere les travaux en base données
+    if (id != 0) works = works.filter((element) => element.categoryId == id);
+    
     let figure = "";
     //Boucle sur les travaux pour les ajouter a la page d'acceuil
     works.forEach((work) => {
@@ -68,20 +71,14 @@ export async function filters() {
     const divFilters = document.querySelector(".filters");
 
     //Récupere les catégories
-    const categorys = await getcategorys();
     //Ajoute le filtre "Tous"
-    divFilters.innerHTML += `<button id="0" class="active">Tous</button>`;
+    let categorys =[{id : 0 , name : "Tous"},...CATEGORYS];
     //Pour chaque categories, ajoutes un bouton correspondant
     categorys.forEach((category) => {
-        let btn = `<button id="${category.id}">${category.name}</button>`;
-        divFilters.innerHTML += btn;
-    });
+        const btn = document.createElement("button");
+        btn.id = category.id;
+        btn.innerText = category.name;
 
-    //Récupere les boutons
-    const btnFilters = document.querySelectorAll(".filters");
-
-    //Ajoute un evenement aux click sur chaque bouton
-    btnFilters.forEach((btn) => {
         btn.addEventListener("click", async (e) => {
             //Récupere les boutons
             const btns = document.querySelectorAll(".filters button");
@@ -94,9 +91,9 @@ export async function filters() {
             //Affiche les travaux avec l'id de la categorie pour afficher ce qui corresponde
             displayWorks(e.target.id);
         });
+        divFilters.appendChild(btn);
     });
 }
-
 
 export function editionMode() {
     //Affiche le bandeau
@@ -115,8 +112,6 @@ export function editionMode() {
     const txtModifier = document.querySelector("span.edition");
     txtModifier.style.setProperty("display", "inline");
 }
-
-
 
 export function initModal() {
     //Initiaalisation des variables pour la modal
@@ -196,7 +191,6 @@ async function imgGalery() {
     });
     document.querySelector(".modal-galery").innerHTML = figure;
 
-
     //Ajoute un evenement au click sur les boutons et rappel img galery pour mettre a jour les images
     const btnSuppr = document.querySelectorAll(".btn-suppr");
     for (let btn of btnSuppr) {
@@ -207,12 +201,9 @@ async function imgGalery() {
     }
 }
 
-
 async function formAddWorks() {
-
     const title = document.getElementById("title");
     const select = document.getElementById("category");
-    const categorys = await getcategorys();
 
     const form = document.querySelector(".modal-add form");
 
