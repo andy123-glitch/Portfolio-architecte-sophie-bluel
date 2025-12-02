@@ -13,23 +13,15 @@ async function getcategorys() {
 }
 
 async function postWorks(formData) {
-    try {
-        const response = await fetch(URLworks, {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + window.localStorage.getItem("token"),
-            },
-            body: formData,
-        });
-
-        if (response.ok) {
-            console.log("Form submitted successfully!");
-        } else {
-            console.error("Form submission failed:", response.statusText);
-        }
-    } catch (error) {
-        console.error("Error submitting form:", error);
-    }
+    return await fetch(URLworks, {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + window.localStorage.getItem("token"),
+        },
+        body: formData,
+    })
+        .then((response) => console.error("Form submission :", response.statusText))
+        .catch((error) => console.error("Error submitting form:", error));
 }
 
 async function delWorks(id) {
@@ -39,11 +31,11 @@ async function delWorks(id) {
             Authorization: "Bearer " + window.localStorage.getItem("token"),
         },
     })
-        .then((response) => response.json())
+        .then(async () => (WORKS = await getworks()))
         .catch((error) => console.error(error));
 }
 
-const WORKS = await getworks();
+let WORKS = await getworks();
 const CATEGORYS = await getcategorys();
 
 export async function displayWorks(id = 0) {
@@ -106,6 +98,7 @@ export function editionMode() {
     log.addEventListener("click", () => {
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
+        location.reload();
     });
 
     //Affiche le texte modifier
@@ -120,11 +113,12 @@ export function initModal() {
     const closes = document.querySelectorAll(".modal-close");
     const next = document.getElementById("modal-next");
     const back = document.querySelector(".modal-back");
+    imgGalery();
 
+    formAddWorks();
     //Ajoute les evenements sur les boutons et le background
     next.addEventListener("click", () => {
         modal("next");
-        formAddWorks();
     });
     for (let close of closes) {
         close.addEventListener("click", () => {
@@ -137,12 +131,10 @@ export function initModal() {
     open.addEventListener("click", () => {
         modal("open");
         //Affiche les photo a supprimer
-        imgGalery();
     });
     back.addEventListener("click", () => {
         modal("return");
         //Affiche les photo a supprimer
-        imgGalery();
     });
 }
 
@@ -175,7 +167,7 @@ function modal(action) {
     }
 }
 
-async function imgGalery() {
+function imgGalery() {
     //Récupere les travaux pour les afficher
     let works = WORKS;
 
@@ -204,13 +196,14 @@ async function imgGalery() {
         modalGalery.appendChild(article);
 
         btn.addEventListener("click", async () => {
-            delWorks(btn.id);
+            await delWorks(btn.id);
             imgGalery();
+            displayWorks();
         });
     });
 }
 
-async function formAddWorks() {
+function formAddWorks() {
     const title = document.getElementById("title");
     const select = document.getElementById("category");
 
@@ -220,7 +213,7 @@ async function formAddWorks() {
         validForm(title, select, preimage);
     });
 
-    categorys.forEach((c) => {
+    CATEGORYS.forEach((c) => {
         let option = document.createElement("option");
         option.innerText = c.name;
         option.value = c.id;
@@ -231,6 +224,7 @@ async function formAddWorks() {
         e.preventDefault();
         const formData = new FormData(form);
         postWorks(formData);
+        location.reload();
     });
 
     const image = document.querySelector(".file img");
