@@ -109,46 +109,47 @@ export function editionMode() {
 export function initModal() {
     //Initiaalisation des variables pour la modal
     const open = document.querySelector("span.edition");
-    const background = document.querySelector(".modal-background");
+    // const background = document.querySelector(".modal-background");
     const closes = document.querySelectorAll(".modal-close");
     const next = document.getElementById("modal-next");
     const back = document.querySelector(".modal-back");
+    const mdelete = document.getElementById("modal-delete");
+    const madd = document.getElementById("modal-add");
+
     imgGalery();
 
     formAddWorks();
     //Ajoute les evenements sur les boutons et le background
     next.addEventListener("click", () => {
-        modal("next");
+        mdelete.close();
+        madd.showModal();
     });
     for (let close of closes) {
         close.addEventListener("click", () => {
-            modal("close");
+            mdelete.close();
+            madd.close();
         });
     }
-    background.addEventListener("click", () => {
-        modal("close");
-    });
     open.addEventListener("click", () => {
-        modal("open");
-        //Affiche les photo a supprimer
+        mdelete.showModal();
     });
     back.addEventListener("click", () => {
-        modal("return");
-        //Affiche les photo a supprimer
+        madd.close();
+        mdelete.showModal();
     });
 }
 
 function modal(action) {
     //initialisation des varibles des modals et du background
-    const background = document.querySelector(".modal-background");
-    const mdelete = document.querySelector(".modal-delete");
-    const madd = document.querySelector(".modal-add");
+    // const background = document.querySelector(".modal-background");
+    const mdelete = document.getElementById("modal-delete");
+    const madd = document.getElementById("modal-add");
 
     // determine ce que l'on veut faire en fonction de l'action passée
     switch (action) {
         case "open":
-            mdelete.style.setProperty("display", "flex");
-            background.style.setProperty("display", "block");
+            // mdelete.style.setProperty("display", "flex");
+            // background.style.setProperty("display", "block");
             break;
         case "next":
             madd.style.setProperty("display", "flex");
@@ -161,7 +162,7 @@ function modal(action) {
         case "close":
         default:
             mdelete.style.setProperty("display", "none");
-            background.style.setProperty("display", "none");
+            // background.style.setProperty("display", "none");
             madd.style.setProperty("display", "none");
             break;
     }
@@ -197,7 +198,6 @@ function imgGalery() {
 
         btn.addEventListener("click", async (e) => {
             await delWorks(btn.id);
-            await e.target.animate([{ opacity: 1 }, { opacity: 0.1, offset: 0.7 }, { opacity: 0 }], 2000);
             imgGalery();
             displayWorks();
         });
@@ -208,7 +208,7 @@ function formAddWorks() {
     const title = document.getElementById("title");
     const select = document.getElementById("category");
 
-    const form = document.querySelector(".modal-add form");
+    const form = document.querySelector(".modal form");
 
     title.addEventListener("keyup", () => {
         validForm(title, select, preimage);
@@ -248,7 +248,7 @@ function formAddWorks() {
             p.style.display = "block";
             image.style.height = "76px";
             image.style.width = "76px";
-             image.src = "assets/icons/preimg.svg";
+            image.src = "assets/icons/preimg.svg";
         }
     });
 }

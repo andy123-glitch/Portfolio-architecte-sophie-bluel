@@ -75,42 +75,43 @@
             </section>
         </main>
 
-        <section class="modal modal-delete">
-            <img src="assets/icons/croix.svg" alt="Croix" class="modal-close"/>
-            <h3>Galerie photo</h3>
-            <div class="modal-galery">
-            </div>
-            <button type="button" id="modal-next">Ajouter une photo</button>
-        </section>
-
-        <section class="modal modal-add">
-            <div class="modal-head">
-                <img src="assets/icons/gauche.svg" alt="Precédent" class="modal-back" />
+        <dialog id="modal-delete">
+            <div class="modal">
                 <img src="assets/icons/croix.svg" alt="Croix" class="modal-close" />
+                <h3>Galerie photo</h3>
+                <div class="modal-galery"></div>
+                <button type="button" id="modal-next">Ajouter une photo</button>
             </div>
-            <h3>Ajouter des Photos</h3>
-            <form action="#" method="get">
-                <label for="image" class="file">
-                    <img src="assets/icons/preimg.svg" alt="" />
-                    <div>+ Ajout photo</div>
-                    <p>jpg, png : 4mo max</p>
-                    <input type="file" name="image" id="image" accept=".jpg,.png" />
-                </label>
-                <fieldset>
-                    <label for="title">Titre</label>
-                    <input type="text" name="title" id="title" />
-                </fieldset>
-                <fieldset>
-                    <label for="category">Catégorie(s)</label>
-                    <select name="category" id="category">
-                    </select>
-                </fieldset>
-                <div class="save-work">
-                    <button type="submit" id="btn-save-work" disabled>Valider</button>
+        </dialog>
+
+        <dialog id="modal-add" >
+            <div class="modal">
+                <div class="modal-head">
+                    <img src="assets/icons/gauche.svg" alt="Precédent" class="modal-back" />
+                    <img src="assets/icons/croix.svg" alt="Croix" class="modal-close" />
                 </div>
-            </form>
-        </section>
-        <div class="modal-background"></div>
+                <h3>Ajouter des Photos</h3>
+                <form action="#" method="get">
+                    <label for="image" class="file">
+                        <img src="assets/icons/preimg.svg" alt="" />
+                        <div>+ Ajout photo</div>
+                        <p>jpg, png : 4mo max</p>
+                        <input type="file" name="image" id="image" accept=".jpg,.png" />
+                    </label>
+                    <fieldset>
+                        <label for="title">Titre</label>
+                        <input type="text" name="title" id="title" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="category">Catégorie(s)</label>
+                        <select name="category" id="category"></select>
+                    </fieldset>
+                    <div class="save-work">
+                        <button type="submit" id="btn-save-work" disabled>Valider</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
 
         <footer>
             <nav>
