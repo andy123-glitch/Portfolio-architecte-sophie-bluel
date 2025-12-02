@@ -134,6 +134,7 @@ body {
     font-family: "Work Sans";
     font-size: 14px;
 }
+
 header {
     display: flex;
     justify-content: space-between;
@@ -210,11 +211,17 @@ li:hover {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+    margin-top: 50px;
 }
 
 .gallery img {
     width: 100%;
+    height: calc(100% - 13px);
+
+    object-fit: cover;
 }
+
+
 #contact {
     width: 50%;
     margin: auto;
@@ -270,11 +277,10 @@ footer nav ul {
     gap: 10px;
     width: 585px;
     margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 .filters button {
+
     font-weight: 700;
     font-size: 1.2em;
     color: #1d6154;
@@ -390,7 +396,7 @@ a {
     position: absolute;
     background-color: #000000a4;
     width: 100%;
-    height: 480%;
+    height: 2635px;
     top: 0;
     left: 0;
     z-index: 0;
@@ -449,7 +455,7 @@ a {
     padding: 0;
 }
 .modal-galery-img {
-    object-fit: contain;
+    object-fit: cover;
     height: 102px;
     width: 76px;
 }

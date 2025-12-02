@@ -195,8 +195,9 @@ function imgGalery() {
         article.appendChild(btn);
         modalGalery.appendChild(article);
 
-        btn.addEventListener("click", async () => {
+        btn.addEventListener("click", async (e) => {
             await delWorks(btn.id);
+            await e.target.animate([{ opacity: 1 }, { opacity: 0.1, offset: 0.7 }, { opacity: 0 }], 2000);
             imgGalery();
             displayWorks();
         });
@@ -220,34 +221,49 @@ function formAddWorks() {
         select.appendChild(option);
     });
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        postWorks(formData);
+        await postWorks(formData);
         location.reload();
     });
 
     const image = document.querySelector(".file img");
     const preimage = document.getElementById("image");
     preimage.addEventListener("change", () => {
-        if (preimage.files[0] !== undefined) {
+        validForm(title, select, preimage);
+        const div = document.querySelector(".file div"),
+            p = document.querySelector(".file p ");
+        if (validImag(preimage.files[0])) {
             image.src = URL.createObjectURL(preimage.files[0]);
             image.onload = () => {
                 URL.revokeObjectURL(image.src);
             };
-            const div = document.querySelector(".file div"),
-                p = document.querySelector(".file p ");
             div.style.display = "none";
             p.style.display = "none";
             image.style.height = "100%";
             image.style.width = "auto";
+        } else {
+            div.style.display = "flex";
+            p.style.display = "block";
+            image.style.height = "76px";
+            image.style.width = "76px";
+             image.src = "assets/icons/preimg.svg";
         }
     });
 }
 
+function validImag(file) {
+    if (file === undefined) return false;
+    if (file.type === "image/png" || file.type === "image/jpeg") {
+        if (file.size < 4000000) return true;
+    }
+    return false;
+}
+
 function validForm(title, select, preimage) {
     const btn = document.getElementById("btn-save-work");
-    if (title.value !== "" && select.options.length != 0 && preimage.files.length === 1) {
+    if (title.value !== "" && select.options.length != 0 && validImag(preimage.files[0])) {
         btn.disabled = false;
     } else btn.disabled = true;
 }
