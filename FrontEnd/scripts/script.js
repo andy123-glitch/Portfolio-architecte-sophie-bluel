@@ -38,7 +38,7 @@ async function delWorks(id) {
 let WORKS = await getworks();
 const CATEGORYS = await getcategorys();
 
-export async function displayWorks(id = 0) {
+export function displayWorks(id = 0) {
     let works = WORKS;
     //Récupere les travaux en base données
     if (id != 0) works = works.filter((element) => element.categoryId == id);
@@ -59,7 +59,7 @@ export function userConnected() {
     return window.localStorage.getItem("userId") || window.localStorage.getItem("token") ? true : false;
 }
 
-export async function filters() {
+export function filters() {
     const divFilters = document.querySelector(".filters");
 
     //Récupere les catégories
