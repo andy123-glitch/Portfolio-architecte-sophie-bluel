@@ -1,6 +1,9 @@
 import { POSTlogin } from "./config.js";
 import { userConnected } from "./script.js";
 
+if (userConnected()) {
+    location.href="index.html"
+}
 //recupere le formulaire
 const form = document.querySelector(".login form");
 form.addEventListener("submit", async (event) => {
