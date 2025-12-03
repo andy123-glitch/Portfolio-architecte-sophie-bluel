@@ -129,10 +129,12 @@ table {
 }
 /** end reset css**/
 body {
-    max-width: 1140px;
-    margin: auto;
     font-family: "Work Sans";
     font-size: 14px;
+}
+.body{
+    max-width: 1140px;
+    margin: auto;
 }
 
 header {
@@ -152,6 +154,7 @@ h1 {
     font-weight: 800;
     color: #b1663c;
 }
+
 
 h1 > span {
     font-family: "Work Sans";
@@ -201,9 +204,14 @@ li:hover {
 #introduction p {
     margin-bottom: 0.5em;
 }
+
+#portfolio{
+    margin-top: 129px;
+}
+
 #portfolio h2 {
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 40px;
 }
 .gallery {
     width: 100%;
@@ -281,6 +289,7 @@ footer nav ul {
 
 .filters button {
 
+    font-family: "Syne","Arial";
     font-weight: 700;
     font-size: 1.2em;
     color: #1d6154;
@@ -288,13 +297,21 @@ footer nav ul {
     border: #1d6154 1px solid;
     border-radius: 60px;
     background-color: #fffef8;
-    padding: 10px 15px;
+    padding: 0px 15px;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
-button.active {
+
+
+
+button.active,button.active:hover {
     color: #fffef8;
     background-color: #1d6154;
+    cursor: auto;
+
 }
+
 /**********************Login*******************/
 
 .login {
@@ -388,6 +405,15 @@ a {
     position: relative;
     left: 30px;
     display: none;
+    cursor: pointer;
+}
+
+.edition:hover {
+    color: #b1663c;
+}
+
+#pswForgotten{
+    cursor: not-allowed;
 }
 
 /****************Modal*********************/
@@ -398,13 +424,17 @@ dialog::backdrop {
 }
 
 :modal{
+    position: absolute;
+    top: 660px;
     border: unset;
     border-radius: 25px;
+    padding : 0;
+    overflow: hidden;
+    width: 630px;
 }
 
 .modal {
-    width: 630px;
-    max-height: 688px;
+    
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
@@ -424,6 +454,7 @@ dialog::backdrop {
     margin-right: 30px;
     margin-top: 26px;
     height: 18px;
+    cursor: pointer;
 }
 
 
@@ -447,6 +478,7 @@ dialog::backdrop {
     width: 17px;
     border-radius: 2px;
     padding: 0;
+    cursor: pointer;
 }
 .modal-galery-img {
     object-fit: cover;
@@ -472,6 +504,7 @@ dialog::backdrop {
     margin: auto;
     margin-top: 38px;
     margin-bottom: 45px;
+    cursor: pointer;
 }
 /***************************************************************************************/
 .file {
@@ -484,6 +517,7 @@ dialog::backdrop {
     padding: 15px 0px;
     height: 169px;
     width: 420px;
+    cursor: pointer;
 }
 
 .file img {
@@ -527,6 +561,7 @@ dialog::backdrop {
 .modal-back{
     margin-left: 30px;
     margin-top: 26px;
+    cursor: pointer;
 }
 
 .save-work {
@@ -542,15 +577,25 @@ dialog::backdrop {
 }
 
 #btn-save-work:disabled{
+    cursor: not-allowed;
     background-color: #A7A7A7;
     color: white;
     border-color: #A7A7A7 ;
+}
+
+#btn-save-work{
+    cursor: pointer;
 }
 
 .modal form {
     gap: 25px;
 }
 
-
+button:hover {
+    border-color: #1d615400;
+    background-color: #1d6154c2;
+    color: #fffef8;
+    cursor: pointer;
+}
 
 
