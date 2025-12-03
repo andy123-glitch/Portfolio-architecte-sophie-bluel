@@ -70,6 +70,7 @@ export function filters() {
         const btn = document.createElement("button");
         btn.id = category.id;
         btn.innerText = category.name;
+        if (category.name === "Tous") btn.classList.add("active");
 
         btn.addEventListener("click", async (e) => {
             //Récupere les boutons
@@ -109,7 +110,7 @@ export function editionMode() {
 export function initModal() {
     //Initiaalisation des variables pour la modal
     const open = document.querySelector("span.edition");
-    // const background = document.querySelector(".modal-background");
+    const backgrounds = document.querySelectorAll("dialog");
     const closes = document.querySelectorAll(".modal-close");
     const next = document.getElementById("modal-next");
     const back = document.querySelector(".modal-back");
@@ -117,8 +118,14 @@ export function initModal() {
     const madd = document.getElementById("modal-add");
 
     imgGalery();
-
     formAddWorks();
+
+    backgrounds.forEach((back) => {
+        back.addEventListener("click", (e) => {
+            if(e.target.nodeName == "DIALOG") {mdelete.close();madd.close();}
+        });
+    });
+
     //Ajoute les evenements sur les boutons et le background
     next.addEventListener("click", () => {
         mdelete.close();
@@ -132,6 +139,10 @@ export function initModal() {
     }
     open.addEventListener("click", () => {
         mdelete.showModal();
+        window.scrollTo({
+            top: mdelete.offsetTop - 200,
+            behavior: "smooth",
+        });
     });
     back.addEventListener("click", () => {
         madd.close();
