@@ -188,7 +188,7 @@ function imgGalery() {
 
     //affiche les images avec un bouton pour supprimer
     works.forEach((element) => {
-        let article = document.createElement("article");
+        let article = document.createElement("figure");
         let imgWork = document.createElement("img");
         imgWork.src = element.imageUrl;
         imgWork.alt = element.title;
