@@ -159,7 +159,7 @@ export function editionMode() {
 
     // Change le lien "login" en "logout" et gère la déconnexion
     const log = document.querySelector(".log");
-    log.innerHTML = '<a href="#">log out</a>';
+    log.innerHTML = '<a href="#">logout</a>';
     log.addEventListener("click", () => {
         // Supprime les informations de connexion du localStorage
         window.localStorage.removeItem("userId");
@@ -268,10 +268,14 @@ function imgGalery() {
 
         // Gère la suppression au clic
         btn.addEventListener("click", async (e) => {
-            await delWorks(btn.id);
-            // Rafraîchit la galerie et l'affichage principal
-            imgGalery();
-            displayWorks();
+            try {
+                await delWorks(btn.id);
+                // Rafraîchit la galerie et l'affichage principal
+                imgGalery();
+                displayWorks();
+            } catch (error) {
+                showError(error, ".modal-delete .error");
+            }
         });
     });
 }
@@ -327,8 +331,7 @@ function formAddWorks() {
             title.value = "";
             validForm(title, select, imgFile);
         } catch (error) {
-            console.log(error);
-            showError(error);
+            showError(error, ".modal-add .error");
         }
     });
 
@@ -422,8 +425,11 @@ function validForm(title, select, imgFile) {
  * Affiche un message d'erreur dans le formulaire
  * @param {Error} error - Erreur à afficher
  */
-function showError(error) {
-    const divError = document.querySelector("form .error");
+function showError(error,selector) {
+    const divError = document.querySelector(selector);
     divError.style.display = "block";
     divError.innerText = error;
+    setTimeout(()=>{
+    divError.style.display = "none";
+    },2500)
 }
