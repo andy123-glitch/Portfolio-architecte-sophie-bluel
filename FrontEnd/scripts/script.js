@@ -267,7 +267,7 @@ function imgGalery() {
         modalGalery.appendChild(article);
 
         // Gère la suppression au clic
-        btn.addEventListener("click", async (e) => {
+        btn.addEventListener("click", async () => {
             try {
                 await delWorks(btn.id);
                 // Rafraîchit la galerie et l'affichage principal

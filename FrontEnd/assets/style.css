@@ -129,7 +129,7 @@ table {
 }
 /** end reset css**/
 body {
-    font-family: "Work Sans";
+    font-family: "Work Sans", Arial, sans-serif;
     font-size: 14px;
 }
 .body{
@@ -149,7 +149,7 @@ section {
 h1 {
     display: flex;
     flex-direction: column;
-    font-family: "Syne";
+    font-family: "Syne", Arial, sans-serif;
     font-size: 22px;
     font-weight: 800;
     color: #b1663c;
@@ -157,13 +157,13 @@ h1 {
 
 
 h1 > span {
-    font-family: "Work Sans";
+    font-family: "Work Sans", Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 0.1em;
 }
 
 h2 {
-    font-family: "Syne";
+    font-family: "Syne", Arial, sans-serif;
     font-weight: 700;
     font-size: 30px;
     color: #1d6154;
@@ -188,7 +188,7 @@ form {
     gap: 39px;
 }
 form fieldset label {
-    font-family: "Work Sans";
+    font-family: "Work Sans", Arial, sans-serif;
     font-weight: 500;
     font-size: 1em;
 }
@@ -210,7 +210,7 @@ form fieldset input,select {
 }
 
 button,input[type="submit"]{
-    font-family: "Syne";
+    font-family: "Syne", Arial, sans-serif;
     font-weight: 700;
     font-size: 1.2em;
     color: #fffef8;
@@ -506,13 +506,13 @@ dialog::backdrop {
     background-color: #cbd6dc;
     font-size: 1em;
     font-weight: normal;
-    font-family: "Work Sans";
+    font-family: "Work Sans", Arial, sans-serif, Arial, sans-serif;
     padding: 10px 33px;
 }
 .file p {
     font-size: 0.9em;
     font-weight: 400;
-    font-family: "Work Sans";
+    font-family: "Work Sans", Arial, sans-serif, Arial, sans-serif, Arial, sans-serif;
 }
 
 .file input {
