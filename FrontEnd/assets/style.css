@@ -181,6 +181,51 @@ nav li {
 li:hover {
     color: #b1663c;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 39px;
+}
+form fieldset label {
+    font-family: "Work Sans";
+    font-weight: 500;
+    font-size: 1em;
+}
+
+form fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form fieldset input {
+    height: 51px;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    box-shadow: 0px 4px 14px #00000017;
+    background-color: white;
+}
+
+button{
+    font-family: "Syne";
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #fffef8;
+    height: 38px;
+    border: none;
+    border-radius: 60px;
+    background-color: #1d6154;
+    padding: 0px 15px;
+    margin: auto;
+}
+
+
+
+
+
+/*************************************************************/
 #introduction {
     display: flex;
     align-items: center;
@@ -224,11 +269,9 @@ li:hover {
 
 .gallery img {
     width: 100%;
-    height: calc(100% - 13px);
-
+    height: calc(100% - 14px);
     object-fit: cover;
 }
-
 
 #contact {
     width: 50%;
@@ -261,16 +304,7 @@ li:hover {
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
-    font-family: "Syne";
-    font-weight: 700;
-    color: white;
-    background-color: #1d6154;
-    margin: 2em auto;
-    width: 180px;
-    text-align: center;
-    border-radius: 60px;
-}
+
 
 footer nav ul {
     display: flex;
@@ -288,18 +322,9 @@ footer nav ul {
 }
 
 .filters button {
-
-    font-family: "Syne","Arial";
-    font-weight: 700;
-    font-size: 1.2em;
     color: #1d6154;
-    height: 38px;
     border: #1d6154 1px solid;
-    border-radius: 60px;
     background-color: #fffef8;
-    padding: 0px 15px;
-    margin-top: 10px;
-    cursor: pointer;
 }
 
 
@@ -324,54 +349,6 @@ button.active,button.active:hover {
 
 .login h2 {
     text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 39px;
-}
-form fieldset label {
-    font-family: "Work Sans";
-    font-weight: 500;
-    font-size: 1em;
-}
-
-form fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-form fieldset input {
-    height: 51px;
-    box-sizing: border-box;
-    width: 100%;
-    border: none;
-    box-shadow: 0px 4px 14px #00000017;
-    background-color: white;
-}
-
-form button {
-    font-weight: 700;
-    font-size: 1.2em;
-    color: #fffef8;
-    height: 38px;
-    border: #1d6154 1px solid;
-    border-radius: 60px;
-    background-color: #1d6154;
-    padding: 10px 15px;
-    width: 179px;
-    margin: auto;
-}
-
-.login > button {
-    font-weight: 700;
-    font-size: 1em;
-    border: none;
-    background-color: #fffef8;
-    text-decoration: underline;
-    color: #3d3d3d;
 }
 
 .error {
@@ -414,6 +391,11 @@ a {
 
 #pswForgotten{
     cursor: not-allowed;
+    border: none;
+    background-color: #fffef8;
+    text-decoration: underline;
+    color: #3d3d3d;
+    font-size: 1em;
 }
 
 /****************Modal*********************/
@@ -463,6 +445,7 @@ dialog::backdrop {
     margin: 0px 100px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 102px;
     column-gap: 9px;
     row-gap: 29px;
     border-bottom: #b3b3b3 1px solid;
@@ -479,6 +462,7 @@ dialog::backdrop {
     border-radius: 2px;
     padding: 0;
     cursor: pointer;
+    font-size: 1.1em;
 }
 .modal-galery-img {
     object-fit: cover;
@@ -491,20 +475,11 @@ dialog::backdrop {
     height: 10px;
 }
 
-.modal > button {
-    font-family: "Syne";
-    font-weight: 700;
-    font-size: 1em;
-    color: #fffef8;
-    height: 36px;
+
+#modal-next {
     width: 237px;
-    border: #1d6154 1px solid;
-    border-radius: 60px;
-    background-color: #1d6154;
-    margin: auto;
     margin-top: 38px;
     margin-bottom: 45px;
-    cursor: pointer;
 }
 /***************************************************************************************/
 .file {
@@ -514,9 +489,7 @@ dialog::backdrop {
     align-items: center;
     background-color: #e8f1f6;
     gap: 7px;
-    padding: 15px 0px;
-    height: 169px;
-    width: 420px;
+    height: 185px;
     cursor: pointer;
 }
 
@@ -571,8 +544,8 @@ dialog::backdrop {
     padding-bottom: 52px;
 }
 
-.save-work button{
-    font-family: "Syne";
+#btn-save-work{
+    width: 237px;
 
 }
 
@@ -583,19 +556,14 @@ dialog::backdrop {
     border-color: #A7A7A7 ;
 }
 
-#btn-save-work{
-    cursor: pointer;
-}
-
 .modal form {
+    width: 420px;
     gap: 25px;
 }
 
 button:hover {
-    border-color: #1d615400;
     background-color: #1d6154c2;
     color: #fffef8;
     cursor: pointer;
+    border-color: #1d6154c2;
 }
-
-
