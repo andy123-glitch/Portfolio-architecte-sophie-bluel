@@ -3,3 +3,6 @@ Backend
 FrontEnd/node_modules
 Backend/database.sqlite
 
+start.bat
+start.txt
+Backend/database.sqlite
