@@ -15,39 +15,42 @@
     </head>
 
     <body>
-        <header>
-            <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">projets</a></li>
-                    <li>contact</li>
-                    <li><a href="login.html">login</a></li>
-                    <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-                </ul>
-            </nav>
-        </header>
-        <main class="login">
-            <h2>Log In</h2>
-            <form action="#" method="post">
-                <fieldset>
-                    <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" value="sophie.bluel@test.tld" />
-                </fieldset>
-                <fieldset>
-                    <label for="password">Mot de passe</label>
-                    <input type="password" name="password" id="password" value="S0phie" />
-                </fieldset>
-                <div class="error">Mot de passe ou E-mail incorrect</div>
-                <button type="submit">Se connecter</button>
-            </form>
-            <button type="button" id="pswForgotten">Mot de passe oublié</button>
-        </main>
-        <footer class="footer-login">
-            <nav>
-                <ul>
-                    <li>Mentions Légales</li>
-                </ul>
-            </nav>
-        </footer>
+        <div class="body">
+
+            <header>
+                <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">projets</a></li>
+                        <li>contact</li>
+                        <li><a href="login.html" class="strong">login</a></li>
+                        <li><img src="./assets/icons/instagram.png" alt="Instagram" class="instagram"/></li>
+                    </ul>
+                </nav>
+            </header>
+            <main class="login">
+                <h2>Log In</h2>
+                <form action="#" method="post">
+                    <fieldset>
+                        <label for="email">E-mail</label>
+                        <input type="email" name="email" id="email" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="password">Mot de passe</label>
+                        <input type="password" name="password" id="password" />
+                    </fieldset>
+                    <div class="error">Erreur dans l’identifiant ou le mot de passe</div>
+                    <button type="submit" id="login-btn">Se connecter</button>
+                </form>
+                <button type="button" id="pswForgotten">Mot de passe oublié</button>
+            </main>
+            <footer class="footer-login">
+                <nav>
+                    <ul>
+                        <li>Mentions Légales</li>
+                    </ul>
+                </nav>
+            </footer>
+        </div>
     </body>
 </html>

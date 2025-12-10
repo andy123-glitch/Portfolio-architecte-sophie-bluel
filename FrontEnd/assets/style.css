@@ -132,7 +132,7 @@ body {
     font-family: "Work Sans", Arial, sans-serif;
     font-size: 14px;
 }
-.body{
+.body {
     max-width: 1140px;
     margin: auto;
 }
@@ -155,11 +155,11 @@ h1 {
     color: #b1663c;
 }
 
-
 h1 > span {
     font-family: "Work Sans", Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 0.1em;
+    color: #9f5c37;
 }
 
 h2 {
@@ -172,7 +172,9 @@ nav ul {
     display: flex;
     align-items: center;
     list-style-type: none;
+    gap: 30px;
 }
+
 nav li {
     padding: 0 10px;
     font-size: 1.2em;
@@ -199,7 +201,8 @@ form fieldset {
     gap: 10px;
 }
 
-form fieldset input,select {
+form fieldset input,
+select {
     height: 51px;
     box-sizing: border-box;
     width: 100%;
@@ -209,7 +212,8 @@ form fieldset input,select {
     padding-left: 16px;
 }
 
-button,input[type="submit"]{
+button,
+input[type="submit"] {
     font-family: "Syne", Arial, sans-serif;
     font-weight: 700;
     font-size: 1.2em;
@@ -222,10 +226,18 @@ button,input[type="submit"]{
     margin: auto;
 }
 
-input[type="submit"]{
+input[type="submit"] {
     padding: 0 80px;
 }
 
+#introduction > figure > img {
+    width: 386px;
+    height: 289px;
+}
+
+.strong {
+    font-weight: 600;
+}
 
 /*************************************************************/
 #introduction {
@@ -252,7 +264,7 @@ input[type="submit"]{
     margin-bottom: 0.5em;
 }
 
-#portfolio{
+#portfolio {
     margin-top: 129px;
 }
 
@@ -261,17 +273,17 @@ input[type="submit"]{
     margin-bottom: 40px;
 }
 .gallery {
-    width: 100%;
+    width: fit-content;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
-    margin-top: 50px;
+    margin: 50px auto 0px;
 }
 
 .gallery img {
-    width: 100%;
-    height: calc(100% - 14px);
+    width: 302px;
+    height: 407px;
     object-fit: cover;
 }
 
@@ -306,8 +318,6 @@ input[type="submit"]{
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-
-
 footer nav ul {
     display: flex;
     justify-content: flex-end;
@@ -329,14 +339,11 @@ footer nav ul {
     background-color: #fffef8;
 }
 
-
-
-
-button.active,button.active:hover {
+button.active,
+button.active:hover {
     color: #fffef8;
     background-color: #1d6154;
     cursor: auto;
-
 }
 
 /**********************Login*******************/
@@ -351,6 +358,11 @@ button.active,button.active:hover {
 
 .login h2 {
     text-align: center;
+}
+
+#login-btn {
+    padding-left: 39px;
+    padding-right: 39px;
 }
 
 .error {
@@ -372,7 +384,16 @@ button.active,button.active:hover {
     align-items: center;
     display: none;
 }
-
+.edition-icon {
+    height: 15px;
+    width: 15px;
+}
+.instagram {
+    height: 22px;
+    width: 22px;
+    position: relative;
+    top: 1px;
+}
 a {
     text-decoration: none;
     color: unset;
@@ -391,7 +412,7 @@ a {
     color: #b1663c;
 }
 
-#pswForgotten{
+#pswForgotten {
     cursor: not-allowed;
     border: none;
     background-color: #fffef8;
@@ -402,23 +423,21 @@ a {
 
 /****************Modal*********************/
 
-
 dialog::backdrop {
-  background-color: rgba(7, 7, 7, 0.733);
+    background-color: rgba(7, 7, 7, 0.733);
 }
 
-:modal{
+:modal {
     position: absolute;
     top: 660px;
     border: unset;
     border-radius: 25px;
-    padding : 0;
+    padding: 0;
     overflow: hidden;
     width: 630px;
 }
 
 .modal {
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -440,8 +459,6 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-
-
 .modal-galery {
     margin: 0px 100px;
     display: grid;
@@ -455,8 +472,8 @@ dialog::backdrop {
 }
 .btn-suppr {
     position: relative;
-    top: -100px;
-    left: 55px;
+    bottom: 99%;
+    left: 73%;
     border: black;
     background-color: black;
     height: 17px;
@@ -468,15 +485,14 @@ dialog::backdrop {
 }
 .modal-galery-img {
     object-fit: cover;
-    height: 102px;
-    width: 76px;
+    height: 100%;
+    width: 100%;
 }
 
 .btn-suppr > img {
     width: 10px;
     height: 10px;
 }
-
 
 #modal-next {
     width: 237px;
@@ -519,14 +535,13 @@ dialog::backdrop {
     display: none;
 }
 
-
 .modal-head {
     display: flex;
     justify-content: space-between;
     align-self: stretch;
 }
 
-.modal-back{
+.modal-back {
     margin-left: 30px;
     margin-top: 26px;
     cursor: pointer;
@@ -539,16 +554,15 @@ dialog::backdrop {
     padding-bottom: 52px;
 }
 
-#btn-save-work{
+#btn-save-work {
     width: 237px;
-
 }
 
-#btn-save-work:disabled{
+#btn-save-work:disabled {
     cursor: not-allowed;
-    background-color: #A7A7A7;
+    background-color: #a7a7a7;
     color: white;
-    border-color: #A7A7A7 ;
+    border-color: #a7a7a7;
 }
 
 .modal form {
@@ -563,10 +577,8 @@ button:hover {
     border-color: #1d6154c2;
 }
 
-
-.footer-login{
+.footer-login {
     position: fixed;
     bottom: 0;
     right: 0;
-
 }

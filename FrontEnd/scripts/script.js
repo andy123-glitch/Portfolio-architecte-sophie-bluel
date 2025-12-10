@@ -62,14 +62,12 @@ async function delWorks(id) {
     })
         .then(async (result) => {
             if (result.ok) {
-                // Rafraîchit la liste des travaux après la suppression
+                // Rafraîchit la liste des travaux après l'ajout
                 c_works = await getworks();
-            } else {
-                throw new Error("suppresion des données : " + result.statusText + "(" + result.status + ")");
             }
         })
         .catch((error) => {
-            throw error;
+            console.log(error);
         });
 }
 
@@ -268,14 +266,10 @@ function imgGalery() {
 
         // Gère la suppression au clic
         btn.addEventListener("click", async () => {
-            try {
-                await delWorks(btn.id);
-                // Rafraîchit la galerie et l'affichage principal
-                imgGalery();
-                displayWorks();
-            } catch (error) {
-                showError(error, ".modal-delete .error");
-            }
+            await delWorks(btn.id);
+            // Rafraîchit la galerie et l'affichage principal
+            imgGalery();
+            displayWorks();
         });
     });
 }
@@ -425,11 +419,11 @@ function validForm(title, select, imgFile) {
  * Affiche un message d'erreur dans le formulaire
  * @param {Error} error - Erreur à afficher
  */
-function showError(error,selector) {
-    const divError = document.querySelector(selector);
+function showError(error) {
+    const divError = document.querySelector(".modal-add .error");
     divError.style.display = "block";
     divError.innerText = error;
-    setTimeout(()=>{
-    divError.style.display = "none";
-    },2500)
+    setTimeout(() => {
+        divError.style.display = "none";
+    }, 5000);
 }
