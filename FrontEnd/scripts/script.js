@@ -289,6 +289,50 @@ function formAddWorks() {
     const image = document.querySelector(".file img");
     const imgFile = document.getElementById("image");
 
+    const filedrop = document.querySelector(".file");
+
+    filedrop.addEventListener(
+        "dragover",
+        (e) => {
+            e.preventDefault();
+        },
+        false
+    );
+
+    filedrop.addEventListener(
+        "dragenter",
+        (e) => {
+            filedrop.classList.add("active");
+        },
+        false
+    );
+
+    filedrop.addEventListener(
+        "dragleave",
+        (e) => {
+            if (e.fromElement === filedrop && e.toElement === form) {
+                filedrop.classList.remove("active");
+            }
+            console.log(e);
+        },
+        false
+    );
+    filedrop.addEventListener(
+        "drop",
+        (e) => {
+            e.preventDefault();
+            filedrop.classList.remove("active");
+        },
+        false
+    );
+    filedrop.addEventListener(
+        "dragend",
+        (e) => {
+            e.preventDefault();
+            filedrop.classList.remove("active");
+        },
+        false
+    );
     // Valide le formulaire à chaque saisie dans le titre
     title.addEventListener("keyup", () => {
         validForm(title, select, imgFile);
@@ -406,7 +450,7 @@ function validForm(title, select, imgFile) {
     const btn = document.getElementById("btn-save-work");
 
     // Vérifie que tous les champs sont remplis et valides
-    if (title.value !== "" && select.options.length != 0 && validImag(imgFile.files[0]) && reset === false) {
+    if (title.value !== "" && select.options.length != 0 && validImag(imgFiles[0]) && reset === false) {
         btn.disabled = false;
         return true;
     }

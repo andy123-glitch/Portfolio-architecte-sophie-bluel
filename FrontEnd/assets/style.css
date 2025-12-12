@@ -208,9 +208,38 @@ select {
     width: 100%;
     border: none;
     box-shadow: 0px 4px 14px #00000017;
-    background-color: white;
     padding-left: 16px;
+    appearance: none;
+    
 }
+
+
+/* Autre maniere de positionner l'icone du selec 
+.select-wrapper{
+    position: relative;
+    display: inline-block;
+}
+
+.select-wrapper::after{
+    content: "⌄";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+} */
+
+ select{
+background-image: url('./icons/down-arrow.png'); 
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 12px;
+}
+
+
+
+
+
 
 button,
 input[type="submit"] {
@@ -510,6 +539,10 @@ dialog::backdrop {
     gap: 7px;
     height: 185px;
     cursor: pointer;
+}
+
+.file.active {
+    background-color: #adadad;
 }
 
 .file img {
