@@ -615,3 +615,7 @@ button:hover {
     bottom: 0;
     right: 0;
 }
+
+.footer-login li{
+    font-size: 1em;
+}

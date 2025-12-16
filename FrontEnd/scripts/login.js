@@ -14,6 +14,10 @@ form.addEventListener("submit", async (event) => {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
 
+    if (email.value === "" || password.value=="") {
+        showError("Email ou Mot de passe non rempli");
+        return;
+    }
     //Construis le body et envoie la requete
     const body = {
         email: email.value,
@@ -30,8 +34,7 @@ form.addEventListener("submit", async (event) => {
     //Si le code de status n'est pas 200, l'email ou le mot de passe est incorrect
     if (connection.status !== 200) {
         //Fais apparaitre un message d'erreur
-        const error = document.querySelector(".error");
-        error.style.display = "block";
+        showError()
     } else {
         //Récupere les donnée au format json
         let result = await connection.json();
@@ -44,3 +47,12 @@ form.addEventListener("submit", async (event) => {
         window.location.href = "index.html";
     }
 });
+
+function showError(errorTxt = "Erreur dans l’identifiant ou le mot de passe", time = 5000) {
+    const error = document.querySelector(".error");
+    error.style.display = "block";
+    error.innerText = errorTxt;
+    setTimeout(() => {
+        error.style.display = "none";
+    }, time);
+}
