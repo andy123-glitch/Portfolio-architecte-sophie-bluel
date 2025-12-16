@@ -86,12 +86,14 @@ export function displayWorks(id = 0) {
     if (id != 0) works = works.filter((element) => element.categoryId == id);
 
     let figure = "";
-
+    const lenghtLimitation = 36;
     // Génère le HTML pour chaque travail
     works.forEach((work) => {
         figure += `<figure>
         <img src="${work.imageUrl}" alt="${work.title}" categorie-name="${work.category.name}">
-        <figcaption>${work.title}</figcaption>
+        <figcaption>${
+            work.title.length > lenghtLimitation ? work.title.slice(0, lenghtLimitation) + "..." : work.title
+        }</figcaption>
         </figure>`;
     });
 
