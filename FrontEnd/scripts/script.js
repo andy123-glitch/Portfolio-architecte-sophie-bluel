@@ -1,13 +1,19 @@
 import { URLworks, GETcategorys } from "/scripts/config.js";
 
+// --- Gestion des données et de l'API (CRUD) ---
+
 /**
- * Récupère la liste de tous les travaux depuis l'API
+ * Récupère la liste de tous les travaux (works) depuis l'API
  * @returns {Promise<Array>} Tableau des travaux ou undefined en cas d'erreur
  */
 async function getworks() {
     return await fetch(URLworks)
         .then((works) => works.json())
-        .catch((error) => console.error(error));
+        .catch((error) => {
+            console.error("Erreur lors de la récupération des travaux :", error);
+            // On retourne undefined ou un tableau vide pour ne pas bloquer le reste
+            return undefined;
+        });
 }
 
 /**
@@ -17,72 +23,91 @@ async function getworks() {
 async function getcategorys() {
     return await fetch(GETcategorys)
         .then((category) => category.json())
-        .catch((error) => console.error(error));
+        .catch((error) => {
+            console.error("Erreur lors de la récupération des catégories :", error);
+            // On retourne undefined ou un tableau vide pour ne pas bloquer le reste
+            return undefined;
+        });
 }
 
 /**
- * Envoie un nouveau travail à l'API via une requête POST et met a jour c_works
+ * Envoie un nouveau travail à l'API via une requête POST et met à jour allWorks
  * @param {FormData} formData - Données du formulaire contenant le travail à ajouter
  * @returns {Promise<void>}
  * @throws {Error} Si l'envoi échoue
  */
 async function postWorks(formData) {
+    // Le token d'authentification est récupéré du localStorage
+    const token = window.localStorage.getItem("token");
+
     return await fetch(URLworks, {
         method: "POST",
         headers: {
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
+            Authorization: "Bearer " + token, // Ajout du token Bearer
+            // Pas de 'Content-Type': 'multipart/form-data' ici, car fetch le gère automatiquement avec FormData
         },
-        body: formData,
+        body: formData, // Les données du formulaire
     })
         .then(async (result) => {
             if (result.ok) {
-                // Rafraîchit la liste des travaux après l'ajout
-                c_works = await getworks();
+                // Rafraîchit la liste des travaux après l'ajout réussi
+                allWorks = await getworks();
             } else {
-                throw new Error("envoi des données : " + result.statusText + "(" + result.status + ")", "");
+                // Lance une erreur avec les détails du statut de la réponse
+                throw new Error(
+                    "Erreur lors de l'envoi des données : " + result.statusText + " (" + result.status + ")"
+                );
             }
         })
         .catch((error) => {
+            // Relance l'erreur pour qu'elle soit gérée par l'appelant (formAddWorks)
             throw error;
         });
 }
 
 /**
- * Supprime un travail via une requête DELETE et met a jour c_works
+ * Supprime un travail via une requête DELETE et met à jour allWorks
  * @param {number} id - Identifiant du travail à supprimer
  * @returns {Promise<void>}
- * @throws {Error} Si la suppression échoue
+ * @throws {Error} Si la suppression échoue (la gestion d'erreur dans le .catch() actuel ne lance pas d'exception)
  */
 async function delWorks(id) {
+    const token = window.localStorage.getItem("token");
+
     return await fetch(URLworks + "/" + id, {
         method: "DELETE",
         headers: {
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
+            Authorization: "Bearer " + token, 
         },
     })
         .then(async (result) => {
             if (result.ok) {
-                // Rafraîchit la liste des travaux après l'ajout
-                c_works = await getworks();
+                // Rafraîchit la liste des travaux après la suppression réussie
+                allWorks = await getworks();
             }
         })
         .catch((error) => {
-            console.log(error);
+            // Log l'erreur mais ne la relance pas, ce qui est une gestion 'douce'
+            console.error("Erreur lors de la suppression du travail :", error);
         });
 }
 
-// Initialisation : récupère les travaux et catégories au chargement du module
-let c_works = await getworks();
+// --- Initialisation des données globales ---
+
+// Récupération initiale des travaux et catégories au chargement du module
+let allWorks = await getworks();
 const CATEGORYS = await getcategorys();
 
+// --- Fonctions d'affichage et de l'interface utilisateur ---
+
 /**
- * Affiche les travaux dans la galerie, avec filtrage optionnel par catégorie
+ * Affiche les travaux dans la galerie principale, avec filtrage optionnel par catégorie
  * @param {number} id - ID de la catégorie à filtrer (0 = tous les travaux)
  */
 export function displayWorks(id = 0) {
-    let works = c_works;
+    let works = allWorks;
 
-    // Filtre les travaux selon la catégorie sélectionnée
+    // Filtre les travaux selon la catégorie sélectionnée, si l'ID est différent de 0
     if (id != 0) works = works.filter((element) => element.categoryId == id);
 
     let figure = "";
@@ -92,18 +117,19 @@ export function displayWorks(id = 0) {
         figure += `<figure>
         <img src="${work.imageUrl}" alt="${work.title}" categorie-name="${work.category.name}">
         <figcaption>${
+            // Truncature du titre si trop long, avec ajout de "..."
             work.title.length > lenghtLimitation ? work.title.slice(0, lenghtLimitation) + "..." : work.title
         }</figcaption>
         </figure>`;
     });
 
-    // Injecte le HTML dans la galerie
+    // Injecte le HTML dans la galerie principale
     document.querySelector(".gallery").innerHTML = figure;
 }
 
 /**
- * Vérifie si l'utilisateur est connecté
- * @returns {boolean} True si l'utilisateur est connecté, false sinon
+ * Vérifie si l'utilisateur est connecté en regardant le localStorage
+ * @returns {boolean} True si l'utilisateur est connecté (token ou userId présent), false sinon
  */
 export function userConnected() {
     return window.localStorage.getItem("userId") || window.localStorage.getItem("token") ? true : false;
@@ -115,7 +141,7 @@ export function userConnected() {
 export function filters() {
     const divFilters = document.querySelector(".filters");
 
-    // Ajoute la catégorie "Tous" au début du tableau
+    // Ajoute la catégorie "Tous" (ID: 0) au début du tableau des catégories
     let categorys = [{ id: 0, name: "Tous" }, ...CATEGORYS];
 
     // Crée un bouton pour chaque catégorie
@@ -129,10 +155,8 @@ export function filters() {
 
         // Gère le clic sur le bouton de filtre
         btn.addEventListener("click", async (e) => {
-            // Récupère tous les boutons de filtre
+            // Récupère tous les boutons de filtre et leur enleve la class active
             const btns = document.querySelectorAll(".filters button");
-
-            // Désactive tous les boutons
             btns.forEach((btn) => {
                 btn.classList.remove("active");
             });
@@ -140,7 +164,7 @@ export function filters() {
             // Active le bouton cliqué
             e.target.classList.add("active");
 
-            // Affiche les travaux filtrés
+            // Affiche les travaux filtrés en appelant displayWorks avec l'ID du bouton
             displayWorks(e.target.id);
         });
 
@@ -150,10 +174,10 @@ export function filters() {
 
 /**
  * Active le mode édition pour les utilisateurs connectés
- * Affiche le bandeau, change "login" en "logout", et affiche les options de modification
+ * 
  */
 export function editionMode() {
-    // Affiche le bandeau d'édition
+    // Affiche le bandeau d'édition (par défaut masqué)
     const bandeau = document.querySelector(".editonMode");
     bandeau.style.setProperty("display", "flex");
 
@@ -161,39 +185,40 @@ export function editionMode() {
     const log = document.querySelector(".log");
     log.innerHTML = '<a href="#">logout</a>';
     log.addEventListener("click", () => {
-        // Supprime les informations de connexion du localStorage
+        // Supprime les informations de connexion du localStorage (déconnexion)
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
-        // Recharge la page pour revenir au mode normal
+        // Recharge la page pour revenir au mode normal (sans les options d'édition)
         location.reload();
     });
 
-    // Affiche le texte "modifier"
+    // Affiche le texte "modifier" à côté des éléments éditables
     const txtModifier = document.querySelector("span.edition");
     txtModifier.style.setProperty("display", "inline");
 }
 
 /**
  * Initialise les modales de suppression et d'ajout de travaux
- * Configure tous les événements et interactions des modales
+ * Configure tous les événements et interactions des modales (ouverture, fermeture, navigation)
  */
 export function initModal() {
     // Récupération des éléments DOM
-    const open = document.querySelector("span.edition");
-    const backgrounds = document.querySelectorAll("dialog");
-    const closes = document.querySelectorAll(".modal-close");
-    const next = document.getElementById("modal-next");
-    const back = document.querySelector(".modal-back");
-    const mdelete = document.getElementById("modal-delete");
-    const madd = document.getElementById("modal-add");
+    const open = document.querySelector("span.edition"); // Élément pour ouvrir la modale
+    const backgrounds = document.querySelectorAll("dialog"); // Pour gerer le background
+    const closes = document.querySelectorAll(".modal-close"); // Boutons de fermeture (X)
+    const next = document.getElementById("modal-next"); // Bouton "Ajouter une photo"
+    const back = document.querySelector(".modal-back"); // Flèche de retour dans la modale d'ajout
+    const mdelete = document.getElementById("modal-delete"); // Modale de suppression
+    const madd = document.getElementById("modal-add"); // Modale d'ajout
 
     // Initialise la galerie d'images et le formulaire d'ajout
     imgGalery();
     formAddWorks();
 
-    // Ferme les modales en cliquant sur le fond
+    // Ferme les modales en cliquant sur la zone de fond (backdrop)
     backgrounds.forEach((back) => {
         back.addEventListener("click", (e) => {
+            // Vérifie si l'élément cliqué est bien la balise <dialog> elle-même (le fond)
             if (e.target.nodeName == "DIALOG") {
                 mdelete.close();
                 madd.close();
@@ -204,10 +229,10 @@ export function initModal() {
     // Passe de la modale de suppression à celle d'ajout
     next.addEventListener("click", () => {
         mdelete.close();
-        madd.showModal();
+        madd.showModal(); 
     });
 
-    // Ferme les modales avec les boutons de fermeture
+    // Ferme les modales avec les boutons de fermeture (X)
     for (let close of closes) {
         close.addEventListener("click", () => {
             mdelete.close();
@@ -233,14 +258,14 @@ export function initModal() {
 
 /**
  * Génère et affiche la galerie d'images dans la modale de suppression
- * Chaque image possède un bouton de suppression
+ * Chaque image est accompagnée d'un bouton de suppression
  */
 function imgGalery() {
-    let works = c_works;
+    let works = allWorks;
     const modalGalery = document.querySelector(".modal-galery");
-    modalGalery.innerHTML = "";
+    modalGalery.innerHTML = ""; // Vide la galerie précédente
 
-    // Crée une carte pour chaque travail
+    // Crée une carte (figure) pour chaque travail
     works.forEach((element) => {
         let article = document.createElement("figure");
 
@@ -269,18 +294,16 @@ function imgGalery() {
         // Gère la suppression au clic
         btn.addEventListener("click", async () => {
             await delWorks(btn.id);
-            // Rafraîchit la galerie et l'affichage principal
+            // Rafraîchit la galerie de la modale et l'affichage principal
             imgGalery();
             displayWorks();
         });
     });
 }
 
-// Flag pour gérer la réinitialisation du formulaire
-let reset = false;
 
 /**
- * Configure le formulaire d'ajout de travaux
+ * Configure le formulaire d'ajout de travaux dans la modale
  * Gère la validation, la prévisualisation d'image et l'envoi
  */
 function formAddWorks() {
@@ -288,9 +311,8 @@ function formAddWorks() {
     const title = document.getElementById("title");
     const select = document.getElementById("category");
     const form = document.querySelector(".modal form");
-    const image = document.querySelector(".file img");
-    const imgFile = document.getElementById("image");
-
+    const image = document.querySelector(".file img"); // Élément <img> pour la prévisualisation
+    const imgFile = document.getElementById("image"); // Champ <input type="file">
 
     // Valide le formulaire à chaque saisie dans le titre
     title.addEventListener("keyup", () => {
@@ -312,121 +334,138 @@ function formAddWorks() {
 
     // Gère la soumission du formulaire
     form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Empêche le rechargement par défaut
+
+        // Vérifie si le formulaire est valide avant de tenter l'envoi
+        if (!validForm(title, select, imgFile.files)) {
+            showError("Veuillez remplir tous les champs correctement.");
+            return;
+        }
+
         try {
             // Envoie les données
             const formData = new FormData(form);
             await postWorks(formData);
 
-            // Rafraîchit l'affichage
+            // Rafraîchit l'affichage principal et la galerie de la modale
             displayWorks();
             imgGalery();
 
-            // Réinitialise le formulaire
-            tooglePrevImg(false);
-            reset = true;
-            title.value = "";
-            validForm(title, select, imgFile);
+            // Réinitialise le formulaire et les états
+            form.reset();
+            tooglePrevImg(false); // Réaffiche le placeholder
+            validForm(title, select, imgFile.files); // Désactive le bouton d'envoi
+
+            
         } catch (error) {
-            showError(error, ".modal-add .error");
+            
+            showError(error);
         }
     });
 
     // Gère la sélection d'une image
     imgFile.addEventListener("change", () => {
-        if (validImag(imgFile.files[0])) {
-            // Crée une prévisualisation de l'image
-            image.src = URL.createObjectURL(imgFile.files[0]);
+        // Le champ de fichier est un FileList, on prend le premier fichier
+        const file = imgFile.files[0];
+
+        if (validImag(file)) {
+            // Crée une URL temporaire pour la prévisualisation de l'image
+            image.src = URL.createObjectURL(file);
             image.onload = () => {
                 // Libère la mémoire une fois l'image chargée
                 URL.revokeObjectURL(image.src);
             };
-            tooglePrevImg(true);
-            reset = false;
+            tooglePrevImg(true); // Affiche la prévisualisation
         } else {
-            tooglePrevImg(false);
+            tooglePrevImg(false); // Affiche le placeholder si l'image n'est pas valide
+            
         }
         validForm(title, select, imgFile.files);
     });
 }
 
 /**
- * Affiche ou masque la prévisualisation de l'image
+ * Affiche ou masque la prévisualisation de l'image dans la modale d'ajout
  * @param {boolean} display - True pour afficher l'image, false pour afficher le placeholder
  */
 function tooglePrevImg(display) {
-    const div = document.querySelector(".file div");
-    const p = document.querySelector(".file p");
-    const image = document.querySelector(".file img");
+    const div = document.querySelector(".file div"); // Bloc du bouton d'ajout
+    const p = document.querySelector(".file p"); // Texte sur la taille/format
+    const image = document.querySelector(".file img"); // L'image de prévisualisation
 
-    switch (display) {
-        case true:
-            // Affiche l'image en plein format
-            div.style.display = "none";
-            p.style.display = "none";
-            image.style.height = "100%";
-            image.style.width = "auto";
-            break;
-        case false:
-            // Affiche le placeholder
-            div.style.display = "flex";
-            p.style.display = "block";
-            image.style.height = "76px";
-            image.style.width = "76px";
-            image.src = "assets/icons/preimg.svg";
-            break;
-        default:
-            break;
+    if (display === true) {
+        // Affiche l'image en plein format et masque les éléments du placeholder
+        div.style.display = "none";
+        p.style.display = "none";
+        image.style.height = "95%";
+        image.style.width = "auto";
+    } else {
+        // Affiche le placeholder par défaut et masque la prévisualisation grand format
+        div.style.display = "flex";
+        p.style.display = "block";
+        // Rétablit les dimensions pour l'icône du placeholder
+        image.style.height = "76px";
+        image.style.width = "76px";
+        // Assigne l'icône par défaut
+        image.src = "assets/icons/preimg.svg";
     }
 }
 
 /**
- * Valide le format et la taille d'une image
+ * Valide le format (PNG/JPEG) et la taille (< 4 Mo) d'un fichier image
  * @param {File} file - Fichier image à valider
  * @returns {boolean} True si l'image est valide, false sinon
  */
 function validImag(file) {
-    console.log(file);
     if (file !== undefined) {
         // Vérifie le type MIME (PNG ou JPEG uniquement)
-        if (file.type === "image/png" || file.type === "image/jpeg") {
-            // Vérifie la taille (< 4 Mo)
-            if (file.size < 4000000) {
-                return true;
-            }
+        const isImage = file.type === "image/png" || file.type === "image/jpeg";
+        // Vérifie la taille (< 4 Mo, soit 4000000 octets)
+        const isSizeValid = file.size < 4000000;
+
+        if (isImage && isSizeValid) {
+            return true;
         }
     }
     return false;
 }
 
 /**
- * Valide l'ensemble du formulaire et active/désactive le bouton de soumission
+ * Valide l'ensemble du formulaire (titre non vide, catégorie sélectionnée, image valide)
+ * et active/désactive le bouton de soumission
  * @param {HTMLInputElement} title - Champ titre
  * @param {HTMLSelectElement} select - Select de catégorie
- * @param {HTMLInputElement} imgFile - Input file de l'image
+ * @param {FileList} imgFile - FileList de l'input file de l'image
  * @returns {boolean} True si le formulaire est valide, false sinon
  */
 function validForm(title, select, imgFile) {
     const btn = document.getElementById("btn-save-work");
 
-    // Vérifie que tous les champs sont remplis et valides
-    if (title.value !== "" && select.options.length != 0 && validImag(imgFile[0]) && reset === false) {
-        btn.disabled = false;
+    const isTitleValid = title.value.trim() !== ""; // Certifie que le titre ne sois pas vide
+    const isCategorySelected = select.options.length > 0 && select.value !== ""; // Assure qu'une catégorie est choisie
+    const isImageValid = imgFile.length > 0 && validImag(imgFile[0]); // Garantie que l'image est conforme
+
+    if (isTitleValid && isCategorySelected && isImageValid ) {
+        btn.disabled = false; // Active le bouton
         return true;
     }
-    //Sinon desactive les boutons et retourne false
+
+    // Sinon désactive le bouton et retourne false
     btn.disabled = true;
     return false;
 }
 
 /**
- * Affiche un message d'erreur dans le formulaire
- * @param {Error} error - Erreur à afficher
+ * Affiche un message d'erreur dans le conteneur spécifié (pour la modale d'ajout)
+ * @param {Error|string} error - Erreur (ou message) à afficher
  */
 function showError(error) {
     const divError = document.querySelector(".modal-add .error");
+    // Utilise le message d'erreur si c'est un objet Error, sinon l'erreur elle-même (le string)
+    divError.innerText = error.message ? error.message : String(error);
     divError.style.display = "block";
-    divError.innerText = error;
+
+    // Masque le message après 5 secondes
     setTimeout(() => {
         divError.style.display = "none";
     }, 5000);
