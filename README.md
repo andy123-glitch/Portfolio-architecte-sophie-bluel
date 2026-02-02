@@ -7,6 +7,12 @@ L’objectif était de finaliser un site de type **portfolio** pour une architec
 
 ---
 
+## 📷 Apercu
+
+![Aperçu du site](screenshot.png)
+
+---
+
 ## 🎯 Objectif du projet 
 
 L’objectif consistait à :
@@ -22,7 +28,8 @@ Le tout devait être réalisé avec :
  * Un back-end pleinement opérationnel,
  * Une gestion des médias via une API.
 
-Aux début du projet, le back-end était entièrement fonctionnel et une partie de la page d’accueil avait été développée.
+Aux début du projet, le back-end était entièrement fonctionnel et une partie de la page d’accueil avait été développée. 
+Toute la logique JavaScript, l’authentification et les appels API du coté front-end ont été implémentés par moi-même.
 
 ---
 
@@ -74,6 +81,14 @@ Ouvrir le dossier `FrontEnd/` dans un éditeur (ou un serveur local) puis lancer
 
 ---
 
+## 🔑 Accés mode admin
+
+Pour tester le mode admin, un compte est deja présent :
+- Email : sophie.bluel@test.tld	
+- Mot de passe : S0phie
+
+---
+
 ## ✅ Compétences mobilisées
 
 * Intégration Front-End (HTML5 / CSS3 / JavaScript)
@@ -97,4 +112,4 @@ Ce projet a été réalisé dans le cadre de la formation OpenClassrooms.
 Usage libre à des fins pédagogiques et comme démonstration de compétences.
 
 
-[1]: https://github.com/andy123-glitch/Portfolio-architecte-sophie-bluel.git "GitHub - andy123-glitch/Portfolio-architecte-sophie-bluel: Code du projet 6 d'intégrateur web."
+[1]: https://github.com/andy123-glitch/Portfolio-architecte-sophie-bluel.git "GitHub - andy123-glitch/Portfolio-architecte-sophie-bluel: Code ."
